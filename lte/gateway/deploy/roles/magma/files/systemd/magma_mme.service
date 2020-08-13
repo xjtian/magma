@@ -11,8 +11,6 @@
 #
 [Unit]
 Description=Magma OAI MME service
-PartOf=magma@mobilityd.service
-After=magma@mobilityd.service
 PartOf=magma@pipelined.service
 After=magma@pipelined.service
 PartOf=magma@sessiond.service

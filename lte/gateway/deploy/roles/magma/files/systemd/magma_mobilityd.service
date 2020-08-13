@@ -11,7 +11,6 @@
 #
 [Unit]
 Description=Magma mobilityd service
-PartOf=magma@mme.service
 Before=magma@mme.service
 After=magma@subscriberdb.service
 Wants=magma@subscriberdb.service

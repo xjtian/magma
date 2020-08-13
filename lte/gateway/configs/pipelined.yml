@@ -119,7 +119,7 @@ monitored_ifaces: ['gtp_br0',
                   ]
 
 # Whether pipelined should cleanup flows on restarts
-clean_restart: true
+clean_restart: false
 
 redis_enabled: false
 
