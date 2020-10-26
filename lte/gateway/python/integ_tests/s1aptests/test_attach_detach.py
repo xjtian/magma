@@ -48,8 +48,8 @@ class TestAttachDetach(unittest.TestCase):
             print("************************* Running UE detach for UE id ",
                   req.ue_id)
             # Now detach the UE
-            self._s1ap_wrapper.s1_util.detach(
-                req.ue_id, detach_type[i], wait_for_s1[i])
+            # self._s1ap_wrapper.s1_util.detach(
+            #     req.ue_id, detach_type[i], wait_for_s1[i])
 
 
 if __name__ == "__main__":

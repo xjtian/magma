@@ -47,10 +47,9 @@ require (
 	github.com/prometheus/client_golang v1.5.1
 	github.com/shirou/gopsutil v2.20.3+incompatible
 	github.com/sparrc/go-ping v0.0.0-20190613174326-4e5b6552494c
-	github.com/stretchr/testify v1.5.1
+	github.com/stretchr/testify v1.6.1
 	github.com/vishvananda/netlink v1.1.0
-	golang.org/x/net v0.0.0-20200625001655-4c5254603344
-	golang.org/x/sys v0.0.0-20200722175500-76b94024e4b6 // indirect
+	golang.org/x/net v0.0.0-20200822124328-c89045814202
 	google.golang.org/appengine v1.6.5 // indirect
 	google.golang.org/grpc v1.31.0
 	magma/cwf/cloud/go v0.0.0-00010101000000-000000000000

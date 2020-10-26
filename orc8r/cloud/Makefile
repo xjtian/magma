@@ -7,7 +7,7 @@ endif
 ##########################################
 ## Some Useful Directory/File Variables ##
 ##########################################
-# Allow MAGMA_ROOT and PLUGIN_DIR to be set from environment to support travis
+# Allow MAGMA_ROOT to be set from environment to support travis
 ifndef MAGMA_ROOT
 MAGMA_ROOT := /home/$(USER)/magma
 endif
@@ -25,11 +25,6 @@ export SWAGGER_V1_ROOT
 export SWAGGER_V1_TEMPLATE
 export SWAGGER_V1_TEMP_GEN
 
-ifndef PLUGIN_DIR
-PLUGIN_DIR := /home/$(USER)/go/plugins
-endif
-export PLUGIN_DIR
-
 ############################
 ## Declare Module Targets ##
 ############################
@@ -44,14 +39,11 @@ define add_module
 	FMT_LIST += $(MODULE)_fmt
 	GEN_LIST += $(MODULE)_gen
 	LINT_LIST += $(MODULE)_lint
-	PLUGIN_LIST += $(MODULE)_plugin
 	SWAGGER_LIST += $(MODULE)_swagger
 	TEST_LIST += $(MODULE)_test
 	TIDY_LIST += $(MODULE)_tidy
 	TOOLS_LIST += $(MODULE)_tools
 	VET_LIST += $(MODULE)_vet
-
-	MIGRATION_PLUGIN_LIST += $(MODULE)_migrationplugin
 endef
 _ := $(foreach module, $(MAGMA_MODULES), $(eval $(call add_module,$(module))))
 
@@ -62,7 +54,7 @@ _ := $(foreach module, $(MAGMA_MODULES), $(eval $(call add_module,$(module))))
 
 precommit: fmt test vet swagger_validate
 
-build: plugin $(BUILD_LIST) migration_plugin swagger
+build: $(BUILD_LIST) swagger
 $(BUILD_LIST): %_build:
 	make -C $*/cloud/go build
 
@@ -95,10 +87,6 @@ $(GEN_LIST): %_gen:
 lint: $(LINT_LIST)
 $(LINT_LIST): %_lint:
 	make -C $*/cloud/go lint
-
-plugin: $(PLUGIN_LIST)
-$(PLUGIN_LIST): %_plugin:
-	make -C $*/cloud/go plugin
 
 test: tools $(TEST_LIST)
 $(TEST_LIST): %_test:
@@ -143,7 +131,3 @@ list:  # List all commands
 	@echo -e "\nAvailable commands:\n"
 	@grep '^[[:lower:]].*:.*#.*' Makefile | awk -F ':|#' '{ printf "\t%-30s%s\n", $$1, $$3 }'
 	@echo -e "\n"
-
-migration_plugin: $(MIGRATION_PLUGIN_LIST)
-$(MIGRATION_PLUGIN_LIST): %_migrationplugin:
-	make -C $*/cloud/go migration_plugin

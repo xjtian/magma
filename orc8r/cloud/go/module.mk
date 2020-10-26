@@ -10,9 +10,9 @@
 # limitations under the License.
 #
 SHELL := /bin/bash
-.PHONY: build clean clean_gen download fmt gen lint plugin test tidy vet migration_plugin
+.PHONY: build clean clean_gen download fmt gen lint test tidy vet
 
-build:: plugin
+build::
 	go install ./...
 
 clean::
@@ -43,9 +43,6 @@ copy_swagger_files:
 lint:
 	golint ./...
 
-plugin::
-	go build -buildmode=plugin -o $(PLUGIN_DIR)/$(PLUGIN_NAME).so .
-
 test::
 	go test ./...
 
@@ -65,10 +62,3 @@ cover:
 	# Don't measure coverage for protos and tools
 	sed -i '/\.pb\.go/d; /.*\/tools\/.*/d; /.*_swaggergen\.go/d' $(COVER_FILE);
 	go tool cover -func=$(COVER_FILE)
-
-
-# for configurator data migration
-migration_plugin:
-	if [[ -d ./tools/migrations/m003_configurator/plugin ]]; then \
-		go build -buildmode=plugin -o $(PLUGIN_DIR)/migrations/m003_configurator/$(PLUGIN_NAME).so ./tools/migrations/m003_configurator/plugin; \
-	fi

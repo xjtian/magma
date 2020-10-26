@@ -17,7 +17,6 @@ ENV GO111MODULE on
 
 # Env variables for specifying the output directories
 ENV GOBIN /build/bin
-ENV PLUGIN_DIR /build/plugins
 ENV PATH ${PATH}:${GOBIN}
 # Use public go modules proxy
 ENV GOPROXY https://proxy.golang.org
@@ -96,7 +95,6 @@ COPY configs /etc/magma/configs
 
 # Copy the build artifacts
 COPY --from=builder /build/bin /var/opt/magma/bin
-COPY --from=builder /build/plugins /var/opt/magma/plugins
 COPY --from=builder /${CNTLR_FILES}/apidocs /var/opt/magma/static/apidocs
 
 # Copy the scripts from the context
