@@ -14,6 +14,7 @@
 package handlers_test
 
 import (
+	context2 "context"
 	"testing"
 	"time"
 
@@ -44,7 +45,7 @@ func getNProbeBlobstore(t *testing.T) storage.NProbeStorage {
 
 func TestCreateNetworkProbeTask(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -95,7 +96,7 @@ func TestCreateNetworkProbeTask(t *testing.T) {
 
 func TestListNetworkProbeTasks(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -175,7 +176,7 @@ func TestListNetworkProbeTasks(t *testing.T) {
 
 func TestGetNetworkProbeTask(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -232,7 +233,7 @@ func TestGetNetworkProbeTask(t *testing.T) {
 
 func TestUpdateNetworkProbeTask(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -306,7 +307,7 @@ func TestUpdateNetworkProbeTask(t *testing.T) {
 
 func TestDeleteNetworkProbeTask(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -373,7 +374,7 @@ func TestDeleteNetworkProbeTask(t *testing.T) {
 
 func TestCreateNetworkProbeDestination(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -414,7 +415,7 @@ func TestCreateNetworkProbeDestination(t *testing.T) {
 
 func TestListNetworkProbeDestinations(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -486,7 +487,7 @@ func TestListNetworkProbeDestinations(t *testing.T) {
 
 func TestGetNetworkProbeDestination(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -539,7 +540,7 @@ func TestGetNetworkProbeDestination(t *testing.T) {
 
 func TestUpdateNetworkProbeDestination(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()
@@ -609,7 +610,7 @@ func TestUpdateNetworkProbeDestination(t *testing.T) {
 
 func TestDeleteNetworkProbeDestination(t *testing.T) {
 	configuratorTestInit.StartTestService(t)
-	err := configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err := configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	e := echo.New()

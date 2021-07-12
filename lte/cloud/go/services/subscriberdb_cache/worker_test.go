@@ -14,6 +14,7 @@ limitations under the License.
 package subscriberdb_cache_test
 
 import (
+	context2 "context"
 	"strings"
 	"testing"
 	"time"
@@ -37,6 +38,7 @@ import (
 	"magma/orc8r/lib/go/protos"
 
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/net/context"
 )
 
 func TestSubscriberdbCacheWorker(t *testing.T) {
@@ -65,7 +67,7 @@ func TestSubscriberdbCacheWorker(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Empty(t, perSubDigests)
 
-	err = configurator.CreateNetwork(configurator.Network{ID: "n1"}, serdes.Network)
+	err = configurator.CreateNetwork(context2.Background(), configurator.Network{ID: "n1"}, serdes.Network)
 	assert.NoError(t, err)
 
 	_, _, err = subscriberdb_cache.RenewDigests(serviceConfig, digestStore, perSubDigestStore)
@@ -142,9 +144,9 @@ func TestSubscriberdbCacheWorker(t *testing.T) {
 	clock.UnfreezeClock(t)
 
 	// Detect newly added and removed networks
-	err = configurator.CreateNetwork(configurator.Network{ID: "n2"}, serdes.Network)
+	err = configurator.CreateNetwork(context.Background(), configurator.Network{ID: "n2"}, serdes.Network)
 	assert.NoError(t, err)
-	configurator.DeleteNetwork("n1")
+	configurator.DeleteNetwork(context.Background(), "n1")
 
 	clock.SetAndFreezeClock(t, clock.Now().Add(20*time.Minute))
 	_, _, err = subscriberdb_cache.RenewDigests(serviceConfig, digestStore, perSubDigestStore)

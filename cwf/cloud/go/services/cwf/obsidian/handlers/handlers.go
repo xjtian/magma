@@ -356,7 +356,7 @@ func createHAPairHandler(c echo.Context) error {
 	if err := c.Bind(haPair); err != nil {
 		return obsidian.HttpError(err, http.StatusBadRequest)
 	}
-	if err := haPair.ValidateModel(); err != nil {
+	if err := haPair.ValidateModel(context.Background()); err != nil {
 		return obsidian.HttpError(err, http.StatusBadRequest)
 	}
 	_, err := configurator.CreateEntity(networkID, haPair.ToEntity(), serdes.Entity)
@@ -402,7 +402,7 @@ func updateHAPairHandler(c echo.Context) error {
 	if err := c.Bind(mutableHaPair); err != nil {
 		return obsidian.HttpError(err, http.StatusBadRequest)
 	}
-	if err := mutableHaPair.ValidateModel(); err != nil {
+	if err := mutableHaPair.ValidateModel(context.Background()); err != nil {
 		return obsidian.HttpError(err, http.StatusBadRequest)
 	}
 	if mutableHaPair.HaPairID != haPairID {

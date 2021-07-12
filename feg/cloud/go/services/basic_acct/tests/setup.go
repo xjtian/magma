@@ -106,7 +106,7 @@ func SetupNetworks(t *testing.T) {
 		servingFegNetworkCfg,
 		federatedLteNetCfg,
 	}
-	_, err := configurator.CreateNetworks(networkConfigs, serdes.Network)
+	_, err := configurator.CreateNetworks(context.Background(), networkConfigs, serdes.Network)
 	assert.NoError(t, err)
 
 	_, err = configurator.CreateEntities(

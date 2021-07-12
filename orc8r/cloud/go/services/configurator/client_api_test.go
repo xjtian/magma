@@ -13,6 +13,7 @@ limitations under the License.
 package configurator_test
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
@@ -53,7 +54,7 @@ func TestConfiguratorService(t *testing.T) {
 		Description: "description",
 		Configs:     config,
 	}
-	_, err := configurator.CreateNetworks([]configurator.Network{network1}, networkSerdes)
+	_, err := configurator.CreateNetworks(context.Background(), []configurator.Network{network1}, networkSerdes)
 	assert.NoError(t, err)
 
 	networks, notFound, err := configurator.LoadNetworks([]string{networkID1}, true, true, networkSerdes)
@@ -73,7 +74,7 @@ func TestConfiguratorService(t *testing.T) {
 		ConfigsToDelete:      toDelete,
 	}
 
-	err = configurator.UpdateNetworks([]configurator.NetworkUpdateCriteria{updateCriteria1}, networkSerdes)
+	err = configurator.UpdateNetworks(context.Background(), []configurator.NetworkUpdateCriteria{updateCriteria1}, networkSerdes)
 	assert.NoError(t, err)
 	networks, notFound, err = configurator.LoadNetworks([]string{networkID1}, true, true, networkSerdes)
 	assert.NoError(t, err)
@@ -90,16 +91,16 @@ func TestConfiguratorService(t *testing.T) {
 		Name:        "test_network2",
 		Description: "description2",
 	}
-	_, err = configurator.CreateNetworks([]configurator.Network{network2}, networkSerdes)
+	_, err = configurator.CreateNetworks(context.Background(), []configurator.Network{network2}, networkSerdes)
 	assert.NoError(t, err)
 
-	networkIDs, err := configurator.ListNetworkIDs()
+	networkIDs, err := configurator.ListNetworkIDs(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, 2, len(networkIDs))
 	assert.Equal(t, networkID2, networkIDs[1])
 
 	// Delete, Load
-	err = configurator.DeleteNetworks([]string{network2.ID})
+	err = configurator.DeleteNetworks(context.Background(), []string{network2.ID})
 	assert.NoError(t, err)
 
 	networks, notFound, err = configurator.LoadNetworks([]string{networkID2}, true, true, networkSerdes)
@@ -108,21 +109,18 @@ func TestConfiguratorService(t *testing.T) {
 	assert.Equal(t, 1, len(notFound))
 
 	// Create Networks With Type
-	createdTypedLteNetworks, err := configurator.CreateNetworks(
-		[]configurator.Network{
-			{
-				Name: "lte network 1",
-				Type: "lte",
-				ID:   "test_network3",
-			},
-			{
-				Name: "lte network 2",
-				Type: "lte",
-				ID:   "test_network4",
-			},
+	createdTypedLteNetworks, err := configurator.CreateNetworks(context.Background(), []configurator.Network{
+		{
+			Name: "lte network 1",
+			Type: "lte",
+			ID:   "test_network3",
 		},
-		networkSerdes,
-	)
+		{
+			Name: "lte network 2",
+			Type: "lte",
+			ID:   "test_network4",
+		},
+	}, networkSerdes)
 	assert.NoError(t, err)
 
 	createdTypedLteNetworks[0].Name = ""

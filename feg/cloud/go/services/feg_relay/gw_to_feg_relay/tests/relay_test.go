@@ -268,7 +268,7 @@ func TestNHRouting(t *testing.T) {
 	assert.True(t, ok)
 	assert.NotNil(t, fegCfg)
 	fegCfg.NhRoutes = nil // delete NH configuration, now FeG Network is just a regular FeG Network
-	err = configurator.UpdateNetworkConfig(nhNetworkID, feg.FegNetworkType, fegCfg, serdes.Network)
+	err = configurator.UpdateNetworkConfig(context.Background(), nhNetworkID, feg.FegNetworkType, fegCfg, serdes.Network)
 	assert.NoError(t, err)
 
 	// Verify, relay now finds the NH local FeG for any IMSI

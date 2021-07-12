@@ -117,7 +117,7 @@ func setupNeutralHostNetworks(t *testing.T) *health_servicers.TestHealthServer {
 		servingFegNetworkCfg,
 		federatedLteNetCfg,
 	}
-	_, err = configurator.CreateNetworks(networkConfigs, serdes.Network)
+	_, err = configurator.CreateNetworks(context.Background(), networkConfigs, serdes.Network)
 	assert.NoError(t, err)
 
 	_, err = configurator.CreateEntities(

@@ -14,6 +14,7 @@ limitations under the License.
 package subscriberdb_cache
 
 import (
+	"context"
 	"time"
 
 	lte_protos "magma/lte/cloud/go/protos"
@@ -105,7 +106,7 @@ func RenewDigests(
 
 // getNetworksToUpdate returns networks to renew or delete in the store.
 func getNetworksToUpdate(store storage.DigestStore, updateIntervalSecs int) ([]string, []string, error) {
-	all, err := configurator.ListNetworkIDs()
+	all, err := configurator.ListNetworkIDs(context.Background())
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "Load current networks for subscriberdb cache")
 	}

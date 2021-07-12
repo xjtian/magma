@@ -305,7 +305,7 @@ func TestDeleteNetwork(t *testing.T) {
 	}
 	tests.RunUnitTest(t, e, tc)
 
-	actual, err := configurator.ListNetworkIDs()
+	actual, err := configurator.ListNetworkIDs(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, []string{"n2"}, actual)
 }
@@ -2229,19 +2229,16 @@ func seedNetworks(t *testing.T) {
 	err := device.RegisterDevice(context.Background(), "n1", orc8r.AccessGatewayRecordType, "hw1", gatewayRecord, serdes.Device)
 	assert.NoError(t, err)
 
-	_, err = configurator.CreateNetworks(
-		[]configurator.Network{
-			models2.NewDefaultWifiNetwork().ToConfiguratorNetwork(),
-			{
-				ID:          "n2",
-				Type:        "blah",
-				Name:        "network_2",
-				Description: "Network 2",
-				Configs:     map[string]interface{}{},
-			},
+	_, err = configurator.CreateNetworks(context.Background(), []configurator.Network{
+		models2.NewDefaultWifiNetwork().ToConfiguratorNetwork(),
+		{
+			ID:          "n2",
+			Type:        "blah",
+			Name:        "network_2",
+			Description: "Network 2",
+			Configs:     map[string]interface{}{},
 		},
-		serdes.Network,
-	)
+	}, serdes.Network)
 	assert.NoError(t, err)
 }
 
